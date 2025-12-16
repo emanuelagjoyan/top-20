@@ -10,23 +10,17 @@
             background-color: #f4f4f4;
             padding: 20px;
             user-select: none;
-            overflow-x: hidden; /* Էֆեկտների համար */
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
         h2 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
             margin-top: 10px;
-            font-size: 22px;
         }
 
         /* === SCOREBOARD AREA === */
         .game-header-area {
-            display: none; 
+            display: none; /* Սկզբում փակ է */
             flex-direction: column;
             align-items: center;
             width: 100%;
@@ -211,6 +205,7 @@
         /* GRIDS */
         .menu-container {
             display: grid;
+            /* 4 սյունակ 32 թեմայի համար (8 շարք) */
             grid-template-columns: repeat(4, 1fr); 
             gap: 10px;
             max-width: 1400px;
@@ -220,24 +215,24 @@
         .game-container {
             display: none;
             grid-template-columns: 1fr 1fr;
-            gap: 8px; 
-            max-width: 1200px; 
+            gap: 8px; /* Tighter gap */
+            max-width: 1200px; /* Wider container for larger buttons */
             margin: 0 auto;
         }
 
         button.tile-btn {
             width: 100%;
             padding: 4px 6px;
-            min-height: 65px; 
-            font-size: 24px; 
-            font-weight: 900; 
-            line-height: 1.1; 
+            min-height: 65px; /* Sufficient height for large text */
+            font-size: 24px; /* LARGE FONT SIZE */
+            font-weight: 900; /* EXTRA BOLD */
+            line-height: 1.1; /* Tight leading for multi-line */
             color: #0056b3;
             background-color: white;
             border: 2px solid #0056b3;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.1s; /* Faster for disco */
+            transition: all 0.2s;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -251,13 +246,13 @@
             background-color: #ffc107;
             color: #333;
             border-color: #ffc107;
-            font-size: 16px; 
+            font-size: 16px; /* Keep menu font reasonable */
         }
 
         button.game-active {
-            background-color: #28a745 !important;
-            color: white !important;
-            border-color: #28a745 !important;
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
         }
 
         .back-btn {
@@ -275,81 +270,6 @@
             cursor: pointer;
         }
 
-        /* === SPECIAL EFFECTS STYLES (ADDED) === */
-        #effect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .effect-text {
-            font-weight: 900;
-            color: #ffca28;
-            text-shadow: 6px 6px 0 #d32f2f;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: popIn 0.5s forwards;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .flying-number {
-            position: fixed;
-            font-weight: 900;
-            color: #28a745;
-            background: white;
-            border: 8px solid #28a745;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-            transition: all 1s ease-in-out; 
-        }
-
-        .particle {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        /* SHAKE ANIMATION */
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-
-        .shake-screen {
-            animation: shake 0.5s;
-            animation-iteration-count: 1;
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-            50% { opacity: 1; transform: scale(1.2) rotate(10deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
-
         @media (max-width: 1024px) {
             .menu-container { grid-template-columns: repeat(3, 1fr); }
         }
@@ -358,13 +278,12 @@
             .controls-bar { flex-direction: column; }
             .scoreboard { flex-direction: column; }
             .team-box { width: 90%; }
+            /* Mobile adjustment */
             button.tile-btn { font-size: 18px; min-height: 55px; } 
         }
     </style>
 </head>
 <body>
-
-    <div id="effect-overlay"></div>
 
     <button id="backButton" class="back-btn" onclick="goBackToMenu()">⬅️ Մենյու</button>
     <div id="notification" class="notification">Չկա 20-յակում</div>
@@ -430,7 +349,7 @@
 
     <script>
         // ============================================================
-        // ՏՎՅԱԼՆԵՐ - 32 ԹԵՄԱ (16 հին + 16 ավելացված)
+        // ՏՎՅԱԼՆԵՐ - 32 ԹԵՄԱ (Հանված են 1, 6, 7, 12, 21, 23, 25, 27, 29, 32, 33, 37, 38, 39, 41, 44)
         // ============================================================
         const allData = [
             // 2
@@ -496,24 +415,7 @@
             // 47
             { title: "Ամենատարածված տղամարդու անունները Հայաստանում", list: ["Դավիթ", "Նարեկ", "Տիգրան", "Հայկ", "Ալեքս", "Մարկ", "Գոռ", "Արթուր", "Սամվել", "Արմեն", "Արամ", "Էրիկ", "Լևոն", "Աշոտ", "Կարեն", "Գևորգ", "Ռոբերտ", "Վարդան", "Արեգ", "Մոնթե"] },
             // 48
-            { title: "Գրքերում ամենաշատ հիշատակված մարդիկ", list: ["Հիսուս Քրիստոս", "Նապոլեոն Բոնապարտ", "Մուհամմադ", "Ուիլյամ Շեքսպիր", "Աբրահամ Լինկոլն", "Ադոլֆ Հիտլեր", "Արիստոտել", "Ալեքսանդր Մեծ", "Թոմաս Ջեֆերսոն", "Պլատոն", "Հուլիոս Կեսար", "Մարտին Լյութեր", "Կառլ Մարքս", "Թեոդոր Ռուզվելտ", "Վիկտորյա թագուհի", "Զիգմունդ Ֆրոյդ", "Սոկրատես", "Քրիստափոր Կոլումբոս", "Մոցարտ", "Չինգիզ խան"] },
-            // --- Ձեր նշած հավելյալ 16 թեմաները մեծ ցուցակից ---
-            { title: "Երկրներն ըստ տարածքի", list: ["Ռուսաստան\n(17.1 մլն կմ²)", "Կանադա\n(9.98 մլն կմ²)", "Չինաստան\n(9.6 մլն կմ²)", "ԱՄՆ\n(9.5 մլն կմ²)", "Բրազիլիա\n(8.5 մլն կմ²)", "Ավստրալիա\n(7.7 մլն կմ²)", "Հնդկաստան\n(3.3 մլն կմ²)", "Արգենտինա\n(2.8 մլն կմ²)", "Ղազախստան\n(2.7 մլն կմ²)", "Ալժիր\n(2.4 մլն կմ²)", "Կոնգոյի ԴՀ\n(2.3 մլն կմ²)", "Սաուդյան Արաբիա\n(2.15 մլն կմ²)", "Մեքսիկա\n(1.96 մլն կմ²)", "Ինդոնեզիա\n(1.9 մլն կմ²)", "Սուդան\n(1.86 մլն կմ²)", "Լիբիա\n(1.76 մլն կմ²)", "Իրան\n(1.65 մլն կմ²)", "Մոնղոլիա\n(1.56 մլն կմ²)", "Պերու\n(1.28 մլն կմ²)", "Չադ\n(1.28 մլն կմ²)"] },
-            { title: "Ամենաշատ մարդկային կյանքեր խլած հիվանդությունները", list: ["Սրտի իշեմիկ հիվանդություն", "Ինսուլտ (Կաթված)", "Թոքերի քրոնիկ օբստրուկտիվ հիվանդություն (ԹՔՕՀ)", "Ստորին շնչուղիների վարակներ (Թոքաբորբ)", "Նորածնային հիվանդություններ", "Շնչափողի, բրոնխների և թոքերի քաղցկեղ", "Ալցհեյմերի հիվանդություն / Դեմենցիա", "Փորլուծային հիվանդություններ", "Շաքարային դիաբետ", "Երիկամների հիվանդություններ", "Տուբերկուլոզ", "ՄԻԱՎ / ՁԻԱՀ", "Լյարդի ցիռոզ", "Հիպերտոնիկ սրտի հիվանդություն", "Մալարիա", "Ստամոքսի քաղցկեղ", "Կրծքագեղձի քաղցկեղ", "Հաստ աղիքի քաղցկեղ", "Իսպանական գրիպ (Իսպանկա)", "Սև մահ (Ժանտախտ)"] },
-            { title: "Ամենատարածված ուտելիքները", list: ["Բրինձ", "Պիցցա", "Պաստա\n(Մակարոնեղեն)", "Հաց", "Հավի միս", "Կարտոֆիլ\n(ֆրի և այլն)", "Համբուրգեր", "Արիշտա\n(Noodles)", "Աղցան", "Ձու", "Ապուր", "Սուշի", "Տակո", "Կարրի", "Քյաբաբ", "Պանիր", "Նրբերշիկ / Երշիկ", "Դիմ Սամ", "Պաելյա", "Պաղպաղակ"] },
-            { title: "Աշխարհի երկրները ըստ երկարակեցության", list: ["Մոնակո\n(~87.0 տարի)", "Հոնկոնգ\n(~85.8 տարի)", "Մակաո\n(~85.5 տարի)", "Ճապոնիա\n(~84.9 տարի)", "Շվեյցարիա\n(~84.3 տարի)", "Սինգապուր\n(~84.1 տարի)", "Լիխտենշտայն\n(~84.0 տարի)", "Հարավային Կորեա\n(~84.0 տարի)", "Իսպանիա\n(~83.9 տարի)", "Ավստրալիա\n(~83.8 տարի)", "Իտալիա\n(~83.8 տարի)", "Շվեդիա\n(~83.7 տարի)", "Մալթա\n(~83.7 տարի)", "Իսլանդիա\n(~83.6 տարի)", "Կանադա\n(~83.6 տարի)", "Իսրայել\n(~83.5 տարի)", "Ֆրանսիա\n(~83.4 տարի)", "Նորվեգիա\n(~83.3 տարի)", "Նոր Զելանդիա\n(~83.2 տարի)", "Լյուքսեմբուրգ\n(~83.1 տարի)"] },
-            { title: "Երկրներն ըստ ԱԷԿ-ների քանակի", list: ["ԱՄՆ\n(~94 ռեակտոր)", "Ֆրանսիա\n(~56 ռեակտոր)", "Չինաստան\n(~56 ռեակտոր)", "Ռուսաստան\n(~37 ռեակտոր)", "Ճապոնիա\n(~33 ռեակտոր)", "Հարավային Կորեա\n(~26 ռեակտոր)", "Հնդկաստան\n(~23 ռեակտոր)", "Կանադա\n(~19 ռեակտոր)", "Ուկրաինա\n(~15 ռեակտոր)", "Մեծ Բրիտանիա\n(~9 ռեակտոր)", "Իսպանիա\n(~7 ռեակտոր)", "Շվեդիա\n(~6 ռեակտոր)", "Պակիստան\n(~6 ռեակտոր)", "Չեխիա\n(~6 ռեակտոր)", "Բելգիա\n(~5 ռեակտոր)", "Ֆինլանդիա\n(~5 ռեակտոր)", "Սլովակիա\n(~5 ռեակտոր)", "Հունգարիա\n(~4 ռեակտոր)", "Շվեյցարիա\n(~4 ռեակտոր)", "ԱՄԷ\n(~4 ռեակտոր)"] },
-            { title: "Երկրներն ըստ բանակի քանակի", list: ["Չինաստան\n(~2.03 մլն)", "Հնդկաստան\n(~1.45 մլն)", "ԱՄՆ\n(~1.39 մլն)", "Հյուսիսային Կորեա\n(~1.28 մլն)", "Ռուսաստան\n(~1.15 մլն+)", "Պակիստան\n(~654,000)", "Հարավային Կորեա\n(~555,000)", "Վիետնամ\n(~482,000)", "Իրան\n(~470,000)", "Եգիպտոս\n(~440,000)", "Թուրքիա\n(~425,000)", "Ինդոնեզիա\n(~400,000)", "Մյանմար\n(~400,000)", "Բրազիլիա\n(~360,000)", "Կոլումբիա\n(~295,000)", "Թաիլանդ\n(~290,000)", "Ճապոնիա\n(~247,000)", "Սաուդյան Արաբիա\n(~225,000)", "Ֆրանսիա\n(~205,000)", "Գերմանիա\n(~184,000)"] },
-            { title: "Երկրներն ըստ ծովային սահմանների երկարության", list: ["Կանադա\n(~202,080 կմ)", "Ինդոնեզիա\n(~54,716 կմ)", "Նորվեգիա\n(~53,199 կմ)", "Ռուսաստան\n(~37,653 կմ)", "Ֆիլիպիններ\n(~36,289 կմ)", "Ճապոնիա\n(~29,751 կմ)", "Ավստրալիա\n(~25,760 կմ)", "ԱՄՆ\n(~19,924 կմ)", "Նոր Զելանդիա\n(~15,134 կմ)", "Չինաստան\n(~14,500 կմ)", "Հունաստան\n(~13,676 կմ)", "Միացյալ Թագավորություն\n(~12,429 կմ)", "Մեքսիկա\n(~9,330 կմ)", "Հնդկաստան\n(~7,516 կմ)", "Բրազիլիա\n(~7,491 կմ)", "Չիլի\n(~6,435 կմ)", "Իտալիա\n(~7,600 կմ)", "Դանիա\n(~7,314 կմ)", "Թուրքիա\n(~7,200 կմ)", "Մալայզիա\n(~4,675 կմ)"] },
-            { title: "Ամենաշատ մարզիկներ ունեցող մարզաձևերը", list: ["Ֆուտբոլ\n(~270+ մլն)", "Վոլեյբոլ\n(~180+ մլն)", "Բասկետբոլ\n(~150+ մլն)", "Բադմինտոն\n(~120+ մլն)", "Սեղանի թենիս\n(~100+ մլն)", "Կրիկետ\n(~100+ մլն)", "Թենիս\n(~87+ մլն)", "Բեյսբոլ / Սոֆթբոլ\n(~65+ մլն)", "Գոլֆ\n(~60+ մլն)", "Մականախաղ\n(~50+ մլն)", "Լող\n(~30+ մլն)", "Հանդբոլ\n(~19+ մլն)", "Աթլետիկա\n(~15+ մլն)", "Ռեգբի\n(~9+ մլն)", "Ձյուդո\n(~8+ մլն)", "Բռնցքամարտ\n(~7+ մլն)", "Ամերիկյան ֆուտբոլ\n(~5+ մլն)", "Սառցե հոկեյ\n(~3+ մլն)", "Ջրագնդակ\n(~2+ մլն)", "Կարատե\n(~2+ մլն)"] },
-            { title: "Պատերազմների ժամանակ ամենաշատ օգտագործված զենքերը", list: ["Ավտոմատ (Կալաշնիկով)", "Հրացան / Կարաբին", "Նիզակ", "Աղեղ և նետ", "Թուր", "Դանակ / Դաշույն", "Ատրճանակ", "Գնդացիր", "Նռնակ", "Տանկ", "Թնդանոթ (Հրետանի)", "Կացին", "Մահակ", "Ականանետ", "Բալիստիկ հրթիռ", "Ռմբակոծիչ", "Հակատանկային նռնականետ", "Պարսատիկ", "Բաբան (Տարան)", "Սնայպերական հրացան"] },
-            { title: "Ամենահայտնի հայերը", list: ["Շառլ Ազնավուր\n(Շանսոնիե)", "Քիմ Քարդաշյան\n(Մեդիա դեմք)", "Շեր\n(Երգչուհի)", "Քըրք Քըրքորյան\n(Գործարար)", "Սերժ Թանկյան\n(Ռոք երաժիշտ)", "Արամ Խաչատրյան\n(Կոմպոզիտոր)", "Հովհաննես Այվազովսկի\n(Ծովանկարիչ)", "Ալեքսիս Օհանյան\n(Reddit)", "Անդրե Աղասի\n(Թենիս)", "Հենրիխ Մխիթարյան\n(Ֆուտբոլ)", "Տիգրան Մեծ\n(Արքա)", "Արշիլ Գորկի\n(Նկարիչ)", "Գարրի Կասպարով\n(Շախմատ)", "Վիլյամ Սարոյան\n(Գրող)", "Գալուստ Գյուլբենկյան\n(Գործարար)", "Տիգրան Պետրոսյան\n(Շախմատ)", "Կոմիտաս Վարդապետ\n(Երաժշտագետ)", "Լևոն Արոնյան\n(Շախմատ)", "Ատոմ Էգոյան\n(Ռեժիսոր)", "Մեսրոպ Մաշտոց\n(Գրերի գյուտ)"] },
-            { title: "Ամենաներբեռնված բջջային հավելվածները", list: ["TikTok", "Instagram", "Facebook", "WhatsApp", "Telegram", "CapCut", "Snapchat", "Temu", "Zoom", "Spotify", "YouTube", "Messenger", "ChatGPT", "Netflix", "Shein", "Amazon", "Google Maps", "Uber", "X (Twitter)", "Subway Surfers"] },
-            { title: "Ամենաշատ մարդ սպանող կենդանիները (տարեկան)", list: ["Մոծակներ", "Օձեր", "Շներ", "Քաղցրահամ ջրի խխունջներ", "Տսե-տսե ճանճ", "Տրիատոմային բզեզ (Assassin Bug)", "Կարիճներ", "Ասկարիդներ (որդեր)", "Կոկորդիլոսներ", "Փղեր", "Գետաձիեր", "Առյուծներ", "Գայլեր", "Շնաձկներ", "Մեդուզաներ", "Վագրեր", "Մեղուներ / Իշամեղուներ", "Արջեր", "Ընձառյուծներ", "Բիզոններ"] },
-            { title: "Ամենասիրված մրգերը (ըստ սպառման)", list: ["Լոլիկ (բուսաբանորեն միրգ)", "Բանան", "Ձմերուկ", "Խնձոր", "Խաղող", "Նարինջ", "Մանգո", "Տանձ", "Մանդարին", "Արքայախնձոր (Անանաս)", "Դեղձ", "Կիտրոն", "Սալոր", "Ելակ", "Թուրինջ (Grapefruit)", "Ավոկադո", "Սեխ", "Ծիրան", "Բալ / Կեռաս", "Կիվի"] },
-            { title: "Ամենատարածված միջազգային բառերը", list: ["OK (Օքեյ)", "Տաքսի (Taxi)", "Հյուրանոց (Hotel)", "Ռադիո (Radio)", "Պիցցա (Pizza)", "Սուրճ (Coffee/Cafe)", "Ստոպ (Stop)", "Սպորտ (Sport)", "Բար (Bar)", "Ավտոբուս (Bus)", "Ինտերնետ (Internet)", "Դոլար (Dollar)", "Ոչ (No)", "Այո (Yes)", "Ոստիկան (Police)", "Բժիշկ (Doctor)", "Մամա (Mama)", "Բանկ (Bank)", "Համբուրգեր", "Տելեֆոն / Հեռախոս"] },
-            { title: "Կենցաղային տեխնիկա արտադրող խոշորագույն ընկերությունները", list: ["Samsung", "LG", "Whirlpool", "Bosch", "Haier", "Electrolux", "Midea", "Panasonic", "Sony", "Philips", "Siemens", "General Electric (GE)", "Hisense", "Sharp", "Toshiba", "Beko", "Hitachi", "Dyson", "Xiaomi", "Daikin"] },
-            { title: "Ամենաշատ ալկոհոլ օգտագործող երկրները (Լիտր/մարդ)", list: ["Չեխիա", "Լատվիա", "Մոլդովա", "Գերմանիա", "Լիտվա", "Իռլանդիա", "Իսպանիա", "Բուլղարիա", "Ուգանդա", "Լյուքսեմբուրգ", "Ֆրանսիա", "Ավստրիա", "Էստոնիա", "Պորտուգալիա", "Լեհաստան", "Սլովենիա", "Միացյալ Թագավորություն", "Հունգարիա", "Ռումինիա", "Բելգիա"] }
+            { title: "Գրքերում ամենաշատ հիշատակված մարդիկ", list: ["Հիսուս Քրիստոս", "Նապոլեոն Բոնապարտ", "Մուհամմադ", "Ուիլյամ Շեքսպիր", "Աբրահամ Լինկոլն", "Ադոլֆ Հիտլեր", "Արիստոտել", "Ալեքսանդր Մեծ", "Թոմաս Ջեֆերսոն", "Պլատոն", "Հուլիոս Կեսար", "Մարտին Լյութեր", "Կառլ Մարքս", "Թեոդոր Ռուզվելտ", "Վիկտորյա թագուհի", "Զիգմունդ Ֆրոյդ", "Սոկրատես", "Քրիստափոր Կոլումբոս", "Մոցարտ", "Չինգիզ խան"] }
         ];
 
         let menuState = new Array(allData.length).fill(0);
@@ -522,8 +424,8 @@
         let scoreTeam1 = 0;
         let scoreTeam2 = 0;
         let scoreTeam3 = 0;
-        let activeTurn = 1; 
-        let teamCount = 2; 
+        let activeTurn = 1; 
+        let teamCount = 2; 
 
         let historyStack = [];
 
@@ -582,7 +484,7 @@
                 s2: scoreTeam2,
                 s3: scoreTeam3,
                 turn: activeTurn,
-                currentGameState: [...gameStates[currentGameIndex]] 
+                currentGameState: [...gameStates[currentGameIndex]] 
             });
         }
 
@@ -616,11 +518,7 @@
                     btn.innerText = `${i + 1}. ${currentData.list[i]}`;
                     btn.classList.add("game-active");
                 } else {
-                    let placeText = `Հորիզոնական ${i+1}`;
-                    if (currentData.hints && currentData.hints[i]) {
-                         placeText = `${i + 1}. ${currentData.hints[i]}`;
-                    }
-                    btn.innerText = placeText;
+                    btn.innerText = `Հորիզոնական ${i+1}`;
                     btn.classList.remove("game-active");
                 }
             }
@@ -709,6 +607,7 @@
                         menuState[index] = 1;
                         renderMenu();
                     } else {
+                        // Open Setup Modal instead of direct start
                         startSetup(index);
                     }
                 };
@@ -776,11 +675,8 @@
                             gameStates[currentGameIndex][i] = false;
                         }
                     } else {
-                        // INSTEAD OF DIRECTLY REVEALING, TRIGGER EFFECT FIRST
-                        triggerSpecialEffect(pointValue, this, () => {
-                            saveState();
-                            revealTile(i);
-                        });
+                        saveState();
+                        revealTile(i);
                     }
                 };
                 
@@ -813,8 +709,8 @@
             
             if(userAnswer.length < 2) return; 
 
-            // DO NOT SAVE STATE YET, WAIT FOR EFFECT
-            
+            saveState();
+
             let currentList = allData[currentGameIndex].list;
             let foundIndex = -1;
 
@@ -834,16 +730,7 @@
             }
 
             if (foundIndex !== -1) {
-                // TRIGGER EFFECT THEN REVEAL
-                let btn = document.getElementById(`tile-${foundIndex}`);
-                triggerSpecialEffect(foundIndex + 1, btn, () => {
-                    saveState();
-                    revealTile(foundIndex);
-                });
-                
-                // Clear input
-                document.getElementById(inputId).value = "";
-
+                revealTile(foundIndex);
             } else {
                 showNotification();
                 setTimeout(switchTurn, 1500);
@@ -872,193 +759,6 @@
 
         function goBackToMenu() {
             renderMenu();
-        }
-
-        // === SPECIAL EFFECTS FUNCTIONS ===
-
-        function runDiscoLights(duration) {
-            const buttons = document.querySelectorAll('.tile-btn'); // Changed to tile-btn
-            const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FFFF33', '#33FFF2', '#FF8C00', '#8A2BE2'];
-            
-            const interval = setInterval(() => {
-                buttons.forEach(btn => {
-                    if (!btn.classList.contains('game-active')) {
-                        btn.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                        btn.style.color = 'white';
-                        btn.style.borderColor = 'white';
-                    }
-                });
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                buttons.forEach(btn => {
-                    if (!btn.classList.contains('game-active')) {
-                        btn.style.backgroundColor = '#ffffff';
-                        btn.style.color = '#0056b3';
-                        btn.style.borderColor = '#0056b3';
-                    }
-                });
-            }, duration);
-        }
-
-        function createParticles(x, y, count) {
-            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500'];
-            for (let i = 0; i < count; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 200 + 50;
-                const tx = Math.cos(angle) * velocity;
-                const ty = Math.sin(angle) * velocity;
-
-                particle.animate([
-                    { transform: 'translate(0, 0)', opacity: 1 },
-                    { transform: `translate(${tx}px, ${ty}px)`, opacity: 0 }
-                ], {
-                    duration: 1000 + Math.random() * 500,
-                    easing: 'cubic-bezier(0, .9, .57, 1)',
-                    iterations: 1
-                });
-
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 1500);
-            }
-        }
-
-        function getEffectSettings(rank) {
-            if (rank === 18 || rank === 17) {
-                return { text: "WOW!!!", particles: 150, fontSize: "180px", delay: 1000 };
-            } else if (rank === 16 || rank === 15) {
-                return { text: "Perfect", particles: 0, fontSize: "130px", delay: 800 };
-            } else if (rank === 14 || rank === 13) {
-                return { text: "👍", particles: 0, fontSize: "160px", delay: 800 };
-            } else if (rank === 12 || rank === 11) {
-                return { text: "👏", particles: 0, fontSize: "160px", delay: 800 };
-            } else {
-                return { text: null, particles: 0, fontSize: "0px", delay: 100 };
-            }
-        }
-
-        function triggerSpecialEffect(rank, buttonElement, callback) {
-            // === DISCO LOGIC FOR 19 AND 20 ===
-            if (rank === 19 || rank === 20) {
-                runDiscoLights(2000); 
-
-                setTimeout(() => {
-                    effectOverlay.style.display = 'flex';
-                    effectOverlay.innerHTML = '';
-                    
-                    document.body.classList.add('shake-screen');
-                    setTimeout(() => document.body.classList.remove('shake-screen'), 500);
-
-                    const centerX = window.innerWidth / 2;
-                    const centerY = window.innerHeight / 2;
-                    createParticles(centerX, centerY, 200);
-                    setTimeout(() => createParticles(centerX - 300, centerY - 100, 80), 200);
-                    setTimeout(() => createParticles(centerX + 300, centerY - 100, 80), 400);
-
-                    const flyingNum = document.createElement("div");
-                    flyingNum.className = "flying-number";
-                    flyingNum.innerText = rank;
-                    
-                    const startSize = 300; 
-                    flyingNum.style.width = startSize + "px";
-                    flyingNum.style.height = startSize + "px";
-                    flyingNum.style.fontSize = (startSize / 1.8) + "px";
-                    flyingNum.style.top = "50%";
-                    flyingNum.style.left = "50%";
-                    flyingNum.style.transform = "translate(-50%, -50%) scale(1)";
-
-                    document.body.appendChild(flyingNum);
-
-                    setTimeout(() => {
-                        const rect = buttonElement.getBoundingClientRect();
-                        flyingNum.style.top = (rect.top + rect.height / 2) + "px";
-                        flyingNum.style.left = (rect.left + rect.width / 2) + "px";
-                        flyingNum.style.width = "0px"; 
-                        flyingNum.style.height = "0px";
-                        flyingNum.style.fontSize = "0px";
-                        flyingNum.style.opacity = "0.5";
-                    }, 1000); 
-
-                    setTimeout(() => {
-                        flyingNum.remove();
-                        effectOverlay.style.display = 'none';
-                        effectOverlay.innerHTML = '';
-                        callback(); 
-                    }, 2000);
-
-                }, 2000);
-                return;
-            }
-
-            // === STANDARD EFFECTS ===
-            const settings = getEffectSettings(rank);
-            
-            effectOverlay.style.display = 'flex';
-            effectOverlay.innerHTML = '';
-
-            let textDuration = 0;
-            if (settings.text) {
-                const textDiv = document.createElement('div');
-                textDiv.className = 'effect-text';
-                textDiv.innerText = settings.text;
-                textDiv.style.fontSize = settings.fontSize;
-                effectOverlay.appendChild(textDiv);
-                textDuration = settings.delay;
-            }
-
-            if (settings.particles > 0) {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                createParticles(centerX, centerY, settings.particles);
-                setTimeout(() => createParticles(centerX - 200, centerY - 100, 80), 300);
-            }
-
-            setTimeout(() => {
-                const existingText = document.querySelector('.effect-text');
-                if (existingText) {
-                    existingText.style.transition = "opacity 0.3s";
-                    existingText.style.opacity = "0";
-                }
-
-                const flyingNum = document.createElement("div");
-                flyingNum.className = "flying-number";
-                flyingNum.innerText = rank;
-                
-                const startSize = 300; 
-                flyingNum.style.width = startSize + "px";
-                flyingNum.style.height = startSize + "px";
-                flyingNum.style.fontSize = (startSize / 1.8) + "px";
-                flyingNum.style.top = "50%";
-                flyingNum.style.left = "50%";
-                flyingNum.style.transform = "translate(-50%, -50%) scale(1)";
-
-                document.body.appendChild(flyingNum);
-
-                setTimeout(() => {
-                    const rect = buttonElement.getBoundingClientRect();
-                    flyingNum.style.top = (rect.top + rect.height / 2) + "px";
-                    flyingNum.style.left = (rect.left + rect.width / 2) + "px";
-                    flyingNum.style.width = "0px"; 
-                    flyingNum.style.height = "0px";
-                    flyingNum.style.fontSize = "0px";
-                    flyingNum.style.opacity = "0.5";
-                }, 900); 
-
-                setTimeout(() => {
-                    flyingNum.remove();
-                    effectOverlay.style.display = 'none';
-                    effectOverlay.innerHTML = '';
-                    callback(); 
-                }, 1900); 
-
-            }, textDuration);
         }
 
         renderMenu();
